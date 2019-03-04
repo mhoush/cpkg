@@ -93,17 +93,20 @@ struct package *create_package_from_archive(char *filename) {
 
 	result = regexec(&cregex, bname, nmatch, pmatch, 0);
 
-	pkgname = malloc(sizeof(char *));
-	pkgname = strncpy(pkgname, bname, pmatch[1].rm_eo - pmatch[1].rm_so);
-	pkgname[pmatch[1].rm_eo - pmatch[1].rm_so] = '\0';
+	c = pmatch[1].rm_eo - pmatch[1].rm_so;
+	pkgname = malloc((c + 1) * sizeof(char));
+	strncpy(pkgname, bname, c);
+	pkgname[c] = '\0';
 
-	pkgver = malloc(sizeof(char *));
-	pkgver = strncpy(pkgver, bname + pmatch[2].rm_so, pmatch[2].rm_eo - pmatch[2].rm_so);
-	pkgver[pmatch[2].rm_eo - pmatch[2].rm_so] = '\0';
+	c = pmatch[2].rm_eo - pmatch[2].rm_so;
+	pkgver = malloc((c + 1 ) * sizeof(char));
+	strncpy(pkgver, bname + pmatch[2].rm_so, c);
+	pkgver[c] = '\0';
 
-	pkgrels = malloc(sizeof(char *));
-	pkgrels = strncpy(pkgrels, bname + pmatch[3].rm_so, pmatch[3].rm_eo - pmatch[3].rm_so);
-	pkgrels[pmatch[3].rm_eo - pmatch[3].rm_so] = '\0';
+	c = pmatch[3].rm_eo - pmatch[3].rm_so;
+	pkgrels = malloc((c + 1) * sizeof(char));
+	strncpy(pkgrels, bname + pmatch[3].rm_so, c);
+	pkgrels[c] = '\0';
 
 	pkgrel = atoi(pkgrels);
 
