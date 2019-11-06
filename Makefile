@@ -4,7 +4,10 @@ VERSION = 6.0.0
 
 CFLAGS = -O2 -Wall -DVERSION=\"$(VERSION)\" \
          -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
+
+ifdef DEBUG
 CFLAGS += -DDEBUG -g
+endif
 
 LIBS = -larchive
 
