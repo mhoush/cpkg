@@ -97,12 +97,14 @@ int pkginfo_run(int argc, char *argv[]) {
 		pkg = create_package_from_archive(o_arg);
 		list_files_in_package(pkg);
 		free_package(pkg);
+		free(o_arg);
 	} else {
 		// modes which require opening the package database
 
 		// use alternate root if specified
 		if (o_root) {
 			snprintf(pkgdb, strlen(o_root) + strlen(PKGDB) + 1, "%s%s", o_root, PKGDB);
+			free(o_root);
 		} else {
 			snprintf(pkgdb, strlen(PKGDB) + 1, "%s", PKGDB);
 		}
@@ -136,10 +138,6 @@ int pkginfo_run(int argc, char *argv[]) {
 		// cleanup packagedb mem
 		free_packagedb(packagedb);
 	}
-
-	// cleanup alternate root if needed
-	if (o_root)
-		free(o_root);
 
 	return(0);
 }
